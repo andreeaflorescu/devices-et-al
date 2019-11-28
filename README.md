@@ -1,10 +1,15 @@
 # Devices and others in rust-vmm
 
 The purpose of this document is to describe my view on the responsibilities and
-concerns of devices in respect to handling interrupts.
+concerns of devices in respect to handling interrupts. The purpose of this
+document is to help in reaching a decision regarding interrupts in rust-vmm
+and unblock the work on related components such as vm-virtio and vm-device.
+
+This document is created in the context of
+[PR#11 on vm-device](https://github.com/rust-vmm/vm-device/pull/11).
 
 After going through the doc, you will notice that there a few things missing.
-I completed ignored KVM and Interrupt Controllers. This is on purpose. Here is
+I completely ignored KVM and Interrupt Controllers. This is on purpose. Here is
 why:
 
 1. No KVM: There is no need for the device emulation to be tightly coupled to
@@ -162,10 +167,21 @@ wikipedia or the virtio specification. Can someone help on this?
 
 ## Can the MMIO and PCI interrupt logic be merged?
 
-Looking at the virtio specification, I don't think so. Merging them at this
+<s>Looking at the virtio specification, I don't think so. Merging them at this
 point in time seems like an early optimization. We should start with 2
 traits/structs for interrupts on MMIO and PCI and do this optimization if
-needed afterwards.
+needed afterwards.</s>
+
+My assumptions from looking at the virtio specifications were wrong. I stand
+corrected by @blitz (Julian Stecklina): "The MMIO transport's way of signaling
+interrupts maps 1:1 to PCI without MSI-x. With MSI-X enabled it's only slightly
+different. It should be possible to present one Transport trait to the virtio
+backend that completely abstracts the different behavior."
+
+With this new information it looks like we can have a `GenericInterrupt` of
+sorts that applies to both MMIO and PCI transport. When MSI-X is supported,
+this generic interrupt needs to be extended. The exact interface can be
+discussed in a PR on vm-virtio.
 
 ## Conclusions
 
