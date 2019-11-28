@@ -42,7 +42,7 @@ http://docs.oasis-open.org/virtio/virtio/v1.0/cs04/virtio-v1.0-cs04.html#x1-3700
 Number 3 unfortunately is different based on the transport so even this one
 should be implemented somewhere else.
 
-As a recap it looks like all Virtio Device:
+As a recap it looks like all virtio devices:
  - **do**: trigger an interrupt
  - **have**: an interrupt status.
  
