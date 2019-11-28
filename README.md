@@ -181,7 +181,9 @@ backend that completely abstracts the different behavior."
 With this new information it looks like we can have a `GenericInterrupt` of
 sorts that applies to both MMIO and PCI transport. When MSI-X is supported,
 this generic interrupt needs to be extended. The exact interface can be
-discussed in a PR on vm-virtio.
+discussed in a PR on vm-virtio. It also looks like `MMIOInterrupt` can be
+converted to `BasicInterrupt` or similar and used by both MMIO and PCI without
+MSI-x.
 
 ## Conclusions
 
