@@ -120,13 +120,15 @@ impl MMIOInterrupt {
 This is where things get complicated and very much branched depending on
 MSI-X being available or not.
 
-TODO.
+I don't really have enough information about PCI. All I know I read from
+wikipedia or the virtio specification. Can someone help on this?
 
 ## Can the MMIO and PCI interrupt logic be merged?
 
-I don't think so, but merging them at this point in time seems like an early
-optimization. We should start with 2 traits/structs for interrupts on MMIO and
-PCI and do this optimization if needed afterwards.
+Looking at the virtio specification, I don't think so. Merging them at this
+point in time seems like an early optimization. We should start with 2
+traits/structs for interrupts on MMIO and PCI and do this optimization if
+needed afterwards.
 
 ## What is missing?
 
